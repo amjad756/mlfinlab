@@ -36,7 +36,7 @@ class TestChapter3(unittest.TestCase):
         daily_vol = get_daily_vol(close=self.data['close'], lookback=100)
 
         # Last value in the set is still the same
-        self.assertTrue(daily_vol[-1] == 0.008968238932170641)
+        self.assertTrue(daily_vol.iloc[-1] == 0.008968238932170641)
 
         # Size matches
         self.assertTrue(daily_vol.shape[0] == 960)
@@ -57,7 +57,7 @@ class TestChapter3(unittest.TestCase):
             vertical_barriers = add_vertical_barrier(t_events=cusum_events, close=self.data['close'], num_days=days)
 
             # For each row assert the time delta is correct
-            for start_date, end_date in vertical_barriers.iteritems():
+            for start_date, end_date in vertical_barriers.items():
                 self.assertTrue((end_date - start_date).days >= 1)
 
         # Check hourly barriers
@@ -65,7 +65,7 @@ class TestChapter3(unittest.TestCase):
             vertical_barriers = add_vertical_barrier(t_events=cusum_events, close=self.data['close'], num_hours=hours)
 
             # For each row assert the time delta is correct
-            for start_date, end_date in vertical_barriers.iteritems():
+            for start_date, end_date in vertical_barriers.items():
                 self.assertTrue((end_date - start_date).seconds >= 3600)
 
         # Check minute barriers
@@ -74,7 +74,7 @@ class TestChapter3(unittest.TestCase):
                                                      num_minutes=minutes)
 
             # For each row assert the time delta is correct
-            for start_date, end_date in vertical_barriers.iteritems():
+            for start_date, end_date in vertical_barriers.items():
                 self.assertTrue((end_date - start_date).seconds >= 60)
 
         # Check seconds barriers
@@ -83,7 +83,7 @@ class TestChapter3(unittest.TestCase):
                                                      num_seconds=seconds)
 
             # For each row assert the time delta is correct
-            for start_date, end_date in vertical_barriers.iteritems():
+            for start_date, end_date in vertical_barriers.items():
                 self.assertTrue((end_date - start_date).seconds >= 1)
 
     def test_triple_barrier_events(self):

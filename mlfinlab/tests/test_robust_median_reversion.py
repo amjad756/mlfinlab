@@ -33,7 +33,7 @@ class TestRobustMedianReversion(TestCase):
         # Initialize RMR.
         rmr = RMR(epsilon=1.1, n_iteration=10, window=3, tau=0.001)
         # Allocates asset prices to RMR.
-        rmr.allocate(self.data, resample_by='M')
+        rmr.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(rmr.all_weights)
         # Check if all weights sum to 1.
@@ -92,7 +92,7 @@ class TestRobustMedianReversion(TestCase):
         # Initialize RMR.
         rmr6 = RMR(epsilon=1.1, n_iteration=10, window=3, tau=0.9)
         # Allocates asset prices to RMR.
-        rmr6.allocate(self.data, resample_by='M')
+        rmr6.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(rmr6.all_weights)
         # Check if all weights sum to 1.
@@ -125,7 +125,7 @@ class TestRobustMedianReversion(TestCase):
         new_data = self.data
         new_data[:] = 1
         # Calculate edge case.
-        rmr8.allocate(new_data, resample_by='M')
+        rmr8.allocate(new_data, resample_by='ME')
 
     def test_rmr_tau_error(self):
         """

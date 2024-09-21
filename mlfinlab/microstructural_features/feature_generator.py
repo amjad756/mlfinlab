@@ -12,6 +12,7 @@ from mlfinlab.microstructural_features.second_generation import get_trades_based
 from mlfinlab.microstructural_features.misc import get_avg_tick_size, vwap
 from mlfinlab.microstructural_features.encoding import encode_tick_rule_array
 from mlfinlab.util.misc import crop_data_frame_in_batches
+import warnings
 
 
 # pylint: disable=too-many-instance-attributes
@@ -160,7 +161,7 @@ class MicrostructuralFeaturesGenerator:
         for row in data.values:
             # Set variables
             date_time = row[0]
-            price = np.float(row[1])
+            price = np.float_(row[1])
             volume = row[2]
             dollar_value = price * volume
             signed_tick = self._apply_tick_rule(price)
@@ -300,5 +301,6 @@ class MicrostructuralFeaturesGenerator:
         try:
             pd.to_datetime(test_batch.iloc[0, 0])
         except ValueError:
-            print('csv file, column 0, not a date time format:',
+            warnings.warn('Invalid date format', DeprecationWarning)
+            raise ValueError('csv file, column 0, not a date time format:',
                   test_batch.iloc[0, 0])

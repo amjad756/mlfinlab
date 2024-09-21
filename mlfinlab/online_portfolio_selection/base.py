@@ -65,7 +65,7 @@ class OLPS:
         :param weights: (list/np.array/pd.DataFrame) Initial weights set by the user. If None, weights
                                                      will default to uniform weights.
         :param resample_by: (str) Specifies how to resample the prices. 'D' for Day, 'W' for Week,
-                                 'M' for Month. The inputs are based on pandas' resample method.
+                                 'ME' for Month. The inputs are based on pandas' resample method.
         :param verbose: (bool) Prints progress bar if true.
         """
         # Check to ensure inputs are correct.
@@ -93,7 +93,7 @@ class OLPS:
         :param asset_prices: (pd.DataFrame) Historical asset prices.
         :param weights: (list/np.array/pd.DataFrame) Initial weights set by the user.
         :param resample_by: (str) Specifies how to resample the prices. 'D' for Day, 'W' for Week,
-                                 'M' for Month. The inputs are based on pandas' resample method.
+                                 'ME' for Month. The inputs are based on pandas' resample method.
         """
         # Resample asset.
         if resample_by is not None:

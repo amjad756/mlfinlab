@@ -39,7 +39,7 @@ class TestLabelingOverMean(unittest.TestCase):
         test2_actual = test1_actual.apply(np.sign)
 
         # Check less precise because calculated numbers have more decimal places than inputted ones.
-        pd.testing.assert_frame_equal(test1, test1_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test1, test1_actual, atol=1e-6)
         pd.testing.assert_frame_equal(test2, test2_actual)
 
     def test_large_set(self):
@@ -54,7 +54,7 @@ class TestLabelingOverMean(unittest.TestCase):
                                   0.0050173, 0.0002504, -0.0004207, -0.018707, -0.013208, -0.00818807, -0.002897],
                                  index=idx42)
 
-        pd.testing.assert_series_equal(test3, test3_actual, check_less_precise=True, check_names=False)
+        pd.testing.assert_series_equal(test3, test3_actual, atol=1e-6, check_names=False)
 
         test4 = excess_over_mean(self.data, lag=True).iloc[-1]
         self.assertTrue(test4.isnull().all())
@@ -67,11 +67,11 @@ class TestLabelingOverMean(unittest.TestCase):
         subset1 = self.data[cols].iloc[0:25]
         subset2 = self.data[cols].iloc[0:100]
         week_idx = subset1.resample('W').last().index
-        month_idx = subset2.resample('M').last().index
+        month_idx = subset2.resample('ME').last().index
         # Resample per week and per month.
         test5 = excess_over_mean(subset1, binary=False, resample_by='W', lag=True)
-        test6 = excess_over_mean(subset2, binary=False, resample_by='M', lag=False)
-        test7 = excess_over_mean(subset2, binary=True, resample_by='M', lag=False)
+        test6 = excess_over_mean(subset2, binary=False, resample_by='ME', lag=False)
+        test7 = excess_over_mean(subset2, binary=True, resample_by='ME', lag=False)
 
         test5_actual = pd.DataFrame({'EEM': [0.017255, -0.042112, 0.004907, 0.016267, -0.026054, np.nan],
                                      'EWG': [-0.011975, -0.019257, -0.048906, 0.017310, -0.003467, np.nan],
@@ -84,6 +84,6 @@ class TestLabelingOverMean(unittest.TestCase):
                                      'EWJ': [np.nan, -0.016684, -0.002956, 0.029392, -0.009471]},
                                     index=month_idx)
 
-        pd.testing.assert_frame_equal(test5, test5_actual, check_less_precise=True)
-        pd.testing.assert_frame_equal(test6, test6_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test5, test5_actual, atol=1e-6)
+        pd.testing.assert_frame_equal(test6, test6_actual, atol=1e-6)
         pd.testing.assert_frame_equal(test7, test6_actual.apply(np.sign))

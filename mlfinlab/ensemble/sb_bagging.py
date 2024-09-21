@@ -14,7 +14,6 @@ from sklearn.ensemble._bagging import BaseBagging
 from sklearn.ensemble._base import _partition_estimators
 from sklearn.base import ClassifierMixin, RegressorMixin
 from sklearn.utils.random import sample_without_replacement
-from sklearn.utils import indices_to_mask
 from sklearn.metrics import accuracy_score, r2_score
 from sklearn.utils.validation import has_fit_parameter
 from sklearn.utils import check_random_state, check_array, check_consistent_length, check_X_y
@@ -38,6 +37,10 @@ MAX_INT = np.iinfo(np.int32).max
 # pylint: disable=bad-super-call
 # pylint: disable=no-else-raise
 
+def indices_to_mask(indices, size):
+  mask = np.zeros(size, dtype=bool)
+  mask[indices] = True
+  return mask
 
 def _generate_random_features(random_state, bootstrap, n_population, n_samples):
     """Draw randomly sampled indices."""
@@ -72,7 +75,7 @@ def _parallel_build_estimators(n_estimators, ensemble, X, y, ind_mat, sample_wei
     max_features = ensemble._max_features
     max_samples = ensemble._max_samples
     bootstrap_features = ensemble.bootstrap_features
-    support_sample_weight = has_fit_parameter(ensemble.base_estimator_,
+    support_sample_weight = has_fit_parameter(ensemble.estimator_,
                                               "sample_weight")
 
     if not support_sample_weight and sample_weight is not None:
@@ -142,7 +145,7 @@ class SequentiallyBootstrappedBaseBagging(BaseBagging, metaclass=ABCMeta):
                  random_state=None,
                  verbose=0):
         super().__init__(
-            base_estimator=base_estimator,
+            estimator=base_estimator,
             n_estimators=n_estimators,
             bootstrap=True,
             max_samples=max_samples,
@@ -245,7 +248,7 @@ class SequentiallyBootstrappedBaseBagging(BaseBagging, metaclass=ABCMeta):
         # Validate max_features
         if isinstance(self.max_features, (numbers.Integral, np.integer)):
             max_features = self.max_features
-        elif isinstance(self.max_features, np.float):
+        elif isinstance(self.max_features, (np.float_, float)):
             max_features = self.max_features * self.n_features_
         else:
             raise ValueError("max_features must be int or float")

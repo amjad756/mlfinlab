@@ -33,7 +33,7 @@ class TestFunctionalCorrelationDrivenNonparametricLearningK(TestCase):
         # Initialize FCORN-K.
         fcorn_k = FCORNK(window=1, rho=1, lambd=1, k=1)
         # Allocates asset prices to FCORN-K.
-        fcorn_k.allocate(self.data, resample_by='3M')
+        fcorn_k.allocate(self.data, resample_by='3ME')
         # Create np.array of all_weights.
         all_weights = np.array(fcorn_k.all_weights)
         # Check if all weights sum to 1.

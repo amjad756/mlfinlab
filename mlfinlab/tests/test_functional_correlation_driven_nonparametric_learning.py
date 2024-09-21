@@ -34,7 +34,7 @@ class TestFunctionalCorrelationDrivenNonparametricLearning(TestCase):
         # Initialize FCORN.
         fcorn = FCORN(window=2, rho=0.5, lambd=10)
         # Allocates asset prices to FCORN.
-        fcorn.allocate(self.data, resample_by='3M')
+        fcorn.allocate(self.data, resample_by='3ME')
         # Create np.array of all_weights.
         all_weights = np.array(fcorn.all_weights)
         # Check if all weights sum to 1.
@@ -94,7 +94,7 @@ class TestFunctionalCorrelationDrivenNonparametricLearning(TestCase):
         # Initialize FCORN.
         fcorn6 = FCORN(window=1, rho=0.5, lambd=10)
         # Allocates asset prices to FCORN.
-        fcorn6.allocate(self.data, resample_by='Y')
+        fcorn6.allocate(self.data, resample_by='YE')
         # Create np.array of all_weights.
         all_weights = np.array(fcorn6.all_weights)
         # Check if all weights sum to 1.

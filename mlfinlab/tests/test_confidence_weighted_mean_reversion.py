@@ -33,7 +33,7 @@ class TestConfidenceWeightedMeanReversion(TestCase):
         # Initialize CWMR.
         cwmr = CWMR(confidence=0.5, epsilon=0.5, method='var')
         # Allocates asset prices to CWMR.
-        cwmr.allocate(self.data, resample_by='M')
+        cwmr.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(cwmr.all_weights)
         # Check if all weights sum to 1.
@@ -50,7 +50,7 @@ class TestConfidenceWeightedMeanReversion(TestCase):
         # Initialize CWMR.
         cwmr = CWMR(confidence=0.5, epsilon=0.5, method='sd')
         # Allocates asset prices to OLMAR.
-        cwmr.allocate(self.data, resample_by='M')
+        cwmr.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(cwmr.all_weights)
         # Check if all weights sum to 1.
@@ -112,7 +112,7 @@ class TestConfidenceWeightedMeanReversion(TestCase):
         # Initialize CWMR.
         cwmr6 = CWMR(confidence=0.5, epsilon=0.5, method='var')
         # Allocates asset prices to CWMR.
-        cwmr6.allocate(self.data, weights=weight, resample_by='M')
+        cwmr6.allocate(self.data, weights=weight, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(cwmr6.all_weights)
         # Check if all weights sum to 1.

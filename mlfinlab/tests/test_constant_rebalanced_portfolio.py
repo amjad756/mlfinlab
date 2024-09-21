@@ -33,7 +33,7 @@ class TestConstantRebalancedPortfolio(TestCase):
         # Initialize CRP.
         crp = CRP()
         # Allocates asset prices to CRP.
-        crp.allocate(self.data, resample_by='M')
+        crp.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(crp.all_weights)
         # All weights for the strategy have to be the same.
@@ -57,7 +57,7 @@ class TestConstantRebalancedPortfolio(TestCase):
         # Initialize CRP.
         crp = CRP(weights)
         # Allocates asset prices to CRP.
-        crp.allocate(self.data, resample_by='M')
+        crp.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(crp.all_weights)
         # All weights for the strategy have to be the same.
@@ -81,7 +81,7 @@ class TestConstantRebalancedPortfolio(TestCase):
         # Initialize CRP.
         crp = CRP()
         # Allocates asset prices to CRP.
-        crp.allocate(self.data, weights, resample_by='M')
+        crp.allocate(self.data, weights, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(crp.all_weights)
         # All weights for the strategy have to be the same.

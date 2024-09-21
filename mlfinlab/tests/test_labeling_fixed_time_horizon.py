@@ -101,11 +101,11 @@ class TestLabelingFixedTime(unittest.TestCase):
         close1 = self.data[cols].iloc[0:30]
         close2 = self.data[cols].iloc[0:150]
         week_index = close1.resample('W').last().index
-        month_index = close2.resample('M').last().index
+        month_index = close2.resample('ME').last().index
         threshold3 = pd.Series([0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1], index=month_index)
 
         test11 = fixed_time_horizon(close1, threshold=0.02, resample_by='W', lag=True, standardized=False)
-        test12 = fixed_time_horizon(close2, threshold=threshold3, resample_by='M', lag=True, standardized=True, window=3)
+        test12 = fixed_time_horizon(close2, threshold=threshold3, resample_by='ME', lag=True, standardized=True, window=3)
         test11_actual = pd.DataFrame({'SPY': [0, -1, 0, 1, -1, 1, np.nan],
                                       'EPP': [0, -1, 0, 1, -1, 0, np.nan],
                                       'FXI': [1, -1, -1, 0, -1, 1, np.nan]},

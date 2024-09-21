@@ -34,7 +34,7 @@ class TestSymmetricCorrelationDrivenNonparametricLearningK(TestCase):
         # Initialize SCORN-K.
         scorn_k = SCORNK(window=2, rho=2, k=1)
         # Allocates asset prices to SCORN-K.
-        scorn_k.allocate(self.data, resample_by='M')
+        scorn_k.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(scorn_k.all_weights)
         # Check if all weights sum to 1.

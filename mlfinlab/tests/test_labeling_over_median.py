@@ -39,7 +39,7 @@ class TestLabelingOverMedian(unittest.TestCase):
         test2_actual = test1_actual.apply(np.sign)
 
         # Check less precise because calculated numbers have more decimal places than inputted ones.
-        pd.testing.assert_frame_equal(test1, test1_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test1, test1_actual, atol=1e-6)
         pd.testing.assert_frame_equal(test2, test2_actual)
 
     def test_resample_period(self):
@@ -59,9 +59,9 @@ class TestLabelingOverMedian(unittest.TestCase):
         # Resample per week and month.
         test4 = excess_over_median(subset1, resample_by='W', lag=False)
         weekly_index = subset1.resample('W').last().index
-        test5 = excess_over_median(subset2, resample_by='M', lag=False)
-        monthly_index = subset2.resample('M').last().index
-        test6 = excess_over_median(subset2, binary=True, resample_by='M', lag=False)  # Binary by month
+        test5 = excess_over_median(subset2, resample_by='ME', lag=False)
+        monthly_index = subset2.resample('ME').last().index
+        test6 = excess_over_median(subset2, binary=True, resample_by='ME', lag=False)  # Binary by month
 
         test4_actual = pd.DataFrame([(np.nan, np.nan, np.nan, np.nan),
                                      (0.019896, -0.009335, 0.007538, -0.007538),
@@ -77,9 +77,9 @@ class TestLabelingOverMedian(unittest.TestCase):
                                      (0.000479, 0.006833, -0.000479, -0.010351)],
                                     columns=cols, index=monthly_index)
 
-        pd.testing.assert_frame_equal(test4, test4_actual, check_less_precise=True)
-        pd.testing.assert_frame_equal(test5, test5_actual, check_less_precise=True)
-        pd.testing.assert_frame_equal(test6, test5_actual.apply(np.sign), check_less_precise=True)
+        pd.testing.assert_frame_equal(test4, test4_actual, atol=1e-6)
+        pd.testing.assert_frame_equal(test5, test5_actual, atol=1e-6)
+        pd.testing.assert_frame_equal(test6, test5_actual.apply(np.sign), atol=1e-6)
 
     def test_forward(self):
         """
@@ -88,12 +88,12 @@ class TestLabelingOverMedian(unittest.TestCase):
         cols = ['EEM', 'EWG', 'TIP']
         subset = self.data[cols].iloc[0:5]
         subset2 = self.data[cols].iloc[0:100]
-        monthly_index = subset2.resample('M').last().index
+        monthly_index = subset2.resample('ME').last().index
 
         test7 = excess_over_median(subset, lag=True)
         test8 = excess_over_median(subset, binary=True, lag=True)
-        test9 = excess_over_median(subset2, resample_by='M', lag=True)
-        test10 = excess_over_median(subset2, resample_by='M', binary=True, lag=True)
+        test9 = excess_over_median(subset2, resample_by='ME', lag=True)
+        test10 = excess_over_median(subset2, resample_by='ME', binary=True, lag=True)
 
         test7_actual = pd.DataFrame([(0.0056216, -0.006201, 0), (-0.010485, 0, 0.019272), (0.006460, 0, -0.001054),
                                      (-0.000824, 0, 0.007678), (np.nan, np.nan, np.nan)],
@@ -102,10 +102,10 @@ class TestLabelingOverMedian(unittest.TestCase):
                                      (0, 0.006354, -0.000958), (np.nan, np.nan, np.nan)],
                                     columns=cols, index=monthly_index)
 
-        pd.testing.assert_frame_equal(test7, test7_actual, check_less_precise=True)
-        pd.testing.assert_frame_equal(test8, test7_actual.apply(np.sign), check_less_precise=True)
-        pd.testing.assert_frame_equal(test9, test9_actual, check_less_precise=True)
-        pd.testing.assert_frame_equal(test10, test9_actual.apply(np.sign), check_less_precise=True)
+        pd.testing.assert_frame_equal(test7, test7_actual, atol=1e-6)
+        pd.testing.assert_frame_equal(test8, test7_actual.apply(np.sign), atol=1e-6)
+        pd.testing.assert_frame_equal(test9, test9_actual, atol=1e-6)
+        pd.testing.assert_frame_equal(test10, test9_actual.apply(np.sign), atol=1e-6)
 
     def test_nan(self):
         """
@@ -116,4 +116,4 @@ class TestLabelingOverMedian(unittest.TestCase):
         with_nan = pd.concat([subset, pd.Series([np.nan]*5, name='nan', index=subset.index)], axis=1)
         test11 = excess_over_median(with_nan)
         test11.drop('nan', axis=1, inplace=True)
-        pd.testing.assert_frame_equal(test11, excess_over_median(subset), check_less_precise=True)
+        pd.testing.assert_frame_equal(test11, excess_over_median(subset), atol=1e-6)

@@ -18,7 +18,7 @@ class TestCombinatorialPurgedCV(unittest.TestCase):
 
         self.info_sets = pd.Series(
             index=pd.date_range(start='2019-01-01 00:00:00', periods=100, freq='D'),
-            data=pd.date_range(start='2019-01-02 00:02:00', periods=100, freq='T'),
+            data=pd.date_range(start='2019-01-02 00:02:00', periods=100, freq='min'),
         )
 
     def test_test_times(self):

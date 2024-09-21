@@ -36,7 +36,7 @@ class RiskMetrics:
         if not isinstance(returns, pd.DataFrame):
             returns = pd.DataFrame(returns)
 
-        return returns.quantile(confidence_level, interpolation='higher')[0]
+        return returns.quantile(confidence_level, interpolation='higher').iloc[0]
 
     def calculate_expected_shortfall(self, returns, confidence_level=0.05):
         """

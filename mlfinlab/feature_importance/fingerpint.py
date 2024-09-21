@@ -10,6 +10,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
 
 
 # pylint: disable=invalid-name
@@ -149,7 +151,7 @@ class AbstractModelFingerprint(ABC):
             x = self.feature_values[col].reshape(-1, 1)
             y = self.ind_partial_dep_functions[col]
 
-            lmodel = LinearRegression(fit_intercept=True, normalize=False)
+            lmodel = make_pipeline(StandardScaler(), LinearRegression(fit_intercept=True))
             lmodel.fit(x, y)
             y_mean = np.mean(y)
             linear_effect = np.mean(np.abs(lmodel.predict(x) - y_mean))
@@ -169,7 +171,7 @@ class AbstractModelFingerprint(ABC):
             x = self.feature_values[col].reshape(-1, 1)
             y = self.ind_partial_dep_functions[col]
 
-            lmodel = LinearRegression(fit_intercept=True, normalize=False)
+            lmodel = make_pipeline(StandardScaler(), LinearRegression(fit_intercept=True))
             lmodel.fit(x, y)
             nonlinear_effect = np.mean(np.abs(lmodel.predict(x) - y.values))
             store[col] = nonlinear_effect

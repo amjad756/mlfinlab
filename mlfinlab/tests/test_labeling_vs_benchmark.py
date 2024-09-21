@@ -44,7 +44,7 @@ class TestReturnOverBenchmark(unittest.TestCase):
                                     index=self.idx10, columns=data3.columns)
         pd.testing.assert_series_equal(test1, test1_actual, check_names=False)
         pd.testing.assert_series_equal(test2, test1_actual.apply(np.sign), check_names=False)
-        pd.testing.assert_frame_equal(test3, test3_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test3, test3_actual, atol=1e-6)
 
     def test_given_benchmark(self):
         """
@@ -77,15 +77,15 @@ class TestReturnOverBenchmark(unittest.TestCase):
         subset1 = data5[40:50]
         subset2 = data5[0:130]
         benchmark_day = pd.Series([0.01, 0.01, 0.01, -0.01, -0.01, -0.02, 0.2, 0.04, -0.1, 0], index=subset1.index)
-        month_index = subset2.resample('M').last().index
+        month_index = subset2.resample('ME').last().index
 
         test7 = return_over_benchmark(subset1, benchmark=benchmark_day, binary=False, resample_by='B', lag=True)
         test7b = return_over_benchmark(subset1, benchmark=benchmark_day, binary=False, lag=True)
-        test8 = return_over_benchmark(subset2, benchmark=-0.02, binary=True, resample_by='M', lag=True)  # Negative
+        test8 = return_over_benchmark(subset2, benchmark=-0.02, binary=True, resample_by='ME', lag=True)  # Negative
         test8_actual = pd.DataFrame({'EEM': [1, -1, 1, 1, -1, -1, np.nan], 'EWG': [1, 1, 1, 1, -1, 1, np.nan],
                                      'TIP': [1, 1, -1, 1, 1, 1, np.nan]}, index=month_index)
 
-        pd.testing.assert_frame_equal(test7, test7b)
+        pd.testing.assert_frame_equal(test7, test7b, check_freq=False)
         pd.testing.assert_frame_equal(test8, test8_actual)
 
     def test_exception(self):

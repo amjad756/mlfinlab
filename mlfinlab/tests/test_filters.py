@@ -41,7 +41,7 @@ class TestCUSUMFilter(unittest.TestCase):
                     event_2 = self.data.index.get_loc(cusum_events[i])
 
                     date_range = self.data.iloc[event_1:event_2 + 1]['close']
-                    last = np.log(date_range[-1])
+                    last = np.log(date_range.iloc[-1])
                     minimum = np.log(date_range.min())
                     maximum = np.log(date_range.max())
 

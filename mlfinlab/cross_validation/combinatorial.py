@@ -126,8 +126,8 @@ class CombinatorialPurgedKFold(KFold):
         for test_splits in combinatorial_test_ranges:
 
             # Embargo
-            test_times = pd.Series(index=[self.samples_info_sets[ix[0]] for ix in test_splits], data=[
-                self.samples_info_sets[ix[1] - 1] if ix[1] - 1 + embargo >= X.shape[0] else self.samples_info_sets[
+            test_times = pd.Series(index=[self.samples_info_sets.iloc[ix[0]] for ix in test_splits], data=[
+                self.samples_info_sets.iloc[ix[1] - 1] if ix[1] - 1 + embargo >= X.shape[0] else self.samples_info_sets.iloc[
                     ix[1] - 1 + embargo]
                 for ix in test_splits])
 

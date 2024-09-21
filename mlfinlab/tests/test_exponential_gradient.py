@@ -33,7 +33,7 @@ class TestExponentialGradient(TestCase):
         # Use multiplicative update rule.
         multiplicative_update = EG(update_rule='MU')
         # Allocates asset prices to MU.
-        multiplicative_update.allocate(self.data, resample_by='M')
+        multiplicative_update.allocate(self.data, resample_by='ME')
         all_weights = np.array(multiplicative_update.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -48,7 +48,7 @@ class TestExponentialGradient(TestCase):
         # Use gradient projection update rule.
         gradient_projection = EG(update_rule='GP')
         # Allocates asset prices to GP.
-        gradient_projection.allocate(self.data, resample_by='M')
+        gradient_projection.allocate(self.data, resample_by='ME')
         all_weights = np.array(gradient_projection.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -63,7 +63,7 @@ class TestExponentialGradient(TestCase):
         # Use expectation maximization update rule.
         expectation_maximization = EG(update_rule='EM')
         # Allocates asset prices to EM.
-        expectation_maximization.allocate(self.data, resample_by='M')
+        expectation_maximization.allocate(self.data, resample_by='ME')
         all_weights = np.array(expectation_maximization.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -79,4 +79,4 @@ class TestExponentialGradient(TestCase):
         expectation_maximization = EG(update_rule='SS')
         with self.assertRaises(ValueError):
             # Running allocate will raise ValueError.
-            expectation_maximization.allocate(self.data, resample_by='M')
+            expectation_maximization.allocate(self.data, resample_by='ME')

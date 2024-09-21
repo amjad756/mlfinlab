@@ -139,9 +139,9 @@ class TestBacktestStatistics(unittest.TestCase):
 
         self.assertTrue(list(drawdown_dol) == [20.0, 30.0, 10.0])
         self.assertTrue(list(time_under_water) == list(time_under_water_dol))
-        self.assertAlmostEqual(time_under_water[0], 0.010951,
+        self.assertAlmostEqual(time_under_water.iloc[0], 0.010951,
                                delta=1e-4)
-        self.assertAlmostEqual(time_under_water[1], 0.008213,
+        self.assertAlmostEqual(time_under_water.iloc[1], 0.008213,
                                delta=1e-4)
 
     def test_sharpe_ratio(self):

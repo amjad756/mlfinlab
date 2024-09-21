@@ -258,7 +258,7 @@ class RiskEstimators:
                 ew_ma = covariance_series.ewm(span=window_span).mean()
 
                 # Using the most current element as the Exponential Covariance value
-                cov_matrix.iloc[row_number, column_number] = ew_ma[-1]
+                cov_matrix.iloc[row_number, column_number] = ew_ma.iloc[-1]
 
         return cov_matrix
 
@@ -448,7 +448,7 @@ class RiskEstimators:
 
         # Changing the type as scipy.optimize.minimize outputs np.array with one element to this function
         if not isinstance(var, float):
-            var = float(var)
+            var = float(var.item())
 
         # Minimum and maximum expected eigenvalues
         eigen_min = var * (1 - (1 / tn_relation) ** (1 / 2)) ** 2

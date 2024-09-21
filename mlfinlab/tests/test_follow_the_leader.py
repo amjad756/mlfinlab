@@ -34,7 +34,7 @@ class TestFollowTheLeader(TestCase):
         # Initialize FTL.
         ftl = FTL()
         # Allocate asset prices to FTL.
-        ftl.allocate(self.data, resample_by='M')
+        ftl.allocate(self.data, resample_by='ME')
         all_weights = np.array(ftl.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -49,7 +49,7 @@ class TestFollowTheLeader(TestCase):
         # Initialize FTL.
         ftl1 = FTL()
         # Allocate asset prices to FTL.
-        ftl1.allocate(self.data, resample_by='M')
+        ftl1.allocate(self.data, resample_by='ME')
         all_weights = np.array(ftl1.all_weights)
         # Get uniform weights.
         uniform_weight = ftl1._uniform_weight()

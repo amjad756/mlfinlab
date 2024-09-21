@@ -82,5 +82,5 @@ class TestTailSets(unittest.TestCase):
         label7 = TailSetLabels(self.data[:100], n_bins=10, vol_adj='mean_abs_dev', window=30)
         test7_pos, test7_neg, _ = label7.get_tail_sets()
 
-        self.assertEqual(test7_pos[1], ['XLU', 'EPP', 'FXI'])
-        self.assertEqual(test7_neg[1], ['EWU', 'XLK', 'DIA'])
+        self.assertEqual(test7_pos.iloc[1], ['XLU', 'EPP', 'FXI'])
+        self.assertEqual(test7_neg.iloc[1], ['EWU', 'XLK', 'DIA'])

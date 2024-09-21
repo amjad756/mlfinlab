@@ -34,7 +34,7 @@ class TestBestConstantRebalancedPortfolio(TestCase):
         # Initialize BCRP.
         bcrp = BCRP()
         # Allocates asset prices to BCRP.
-        bcrp.allocate(self.data, resample_by='M')
+        bcrp.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(bcrp.all_weights)
         # All weights for the strategy have to be the same.
@@ -54,14 +54,14 @@ class TestBestConstantRebalancedPortfolio(TestCase):
         # Initialize BCRP
         bcrp1 = BCRP()
         # Allocates asset prices to BCRP.
-        bcrp1.allocate(self.data, resample_by='M')
+        bcrp1.allocate(self.data, resample_by='ME')
         # Get final returns for bcrp1.
         bcrp1_returns = np.array(bcrp1.portfolio_return)[-1]
         # Set an arbitray weight to test.
         weight = bcrp1._uniform_weight()
         # Initialize CRP.
         crp = CRP(weight)
-        crp.allocate(self.data, resample_by='M')
+        crp.allocate(self.data, resample_by='ME')
         # Get final returns for CRP.
         crp_returns = np.array(crp.portfolio_return)[-1]
         # Check that CRP returns are lower than BCRP returns.

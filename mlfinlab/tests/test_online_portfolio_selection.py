@@ -97,7 +97,7 @@ class TestOLPS(TestCase):
         # Initialize OLPS.
         olps5 = OLPS()
         # Allocates asset prices to OLPS.
-        olps5.allocate(self.data, weights=weight, resample_by='M')
+        olps5.allocate(self.data, weights=weight, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(olps5.all_weights)
         # Check if all weights sum to 1.
@@ -114,7 +114,7 @@ class TestOLPS(TestCase):
         # Initialize OLPS.
         olps6 = OLPS()
         # Allocates asset prices to OLPS.
-        olps6.allocate(self.data, resample_by='M')
+        olps6.allocate(self.data, resample_by='ME')
         # Calculate uniform weights.
         olps6_uni_weight = olps6._uniform_weight()
         # Calculated weights should be equal.
@@ -127,7 +127,7 @@ class TestOLPS(TestCase):
         # Initialize OLPS.
         olps7 = OLPS()
         # Allocates asset prices to OLPS.
-        olps7.allocate(self.data, resample_by='M')
+        olps7.allocate(self.data, resample_by='ME')
         # Test normalization on a random weight.
         random_weight = np.ones(3)
         # Use method to normalize random_weight.
@@ -142,7 +142,7 @@ class TestOLPS(TestCase):
         # Initialize OLPS.
         olps8 = OLPS()
         # Allocates asset prices to OLPS.
-        olps8.allocate(self.data, resample_by='M')
+        olps8.allocate(self.data, resample_by='ME')
         # Initialize uniform weights.
         weights = olps8._uniform_weight()
         # Project uniform weights to simplex domain.
@@ -157,7 +157,7 @@ class TestOLPS(TestCase):
         # Initialize OLPS.
         olps9 = OLPS()
         # Allocates asset prices to OLPS with verbose=True.
-        olps9.allocate(self.data, resample_by='M', verbose=True)
+        olps9.allocate(self.data, resample_by='ME', verbose=True)
 
     def test_simplex_all_negatives(self):
         """
@@ -166,7 +166,7 @@ class TestOLPS(TestCase):
         # Initialize OLPS.
         olps10 = OLPS()
         # Allocates asset prices to OLPS with verbose=True.
-        olps10.allocate(self.data, resample_by='M')
+        olps10.allocate(self.data, resample_by='ME')
         # Negative weights.
         neg_weight = np.array([-10e20, -10e20])
         np.testing.assert_almost_equal(olps10._simplex_projection(neg_weight), np.array([0.5, 0.5]))

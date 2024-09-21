@@ -511,12 +511,13 @@ class TestMVO(unittest.TestCase):
 
         mvo = MeanVarianceOptimisation()
         mvo.allocate(asset_prices=self.data)
+        print(mvo.get_portfolio_metrics())
         with patch('sys.stdout', new=StringIO()) as fake_out:
             mvo.get_portfolio_metrics()
             output = fake_out.getvalue().strip()
-            self.assertTrue('Portfolio Return = 0.017362404155484328' in output)
-            self.assertTrue('Portfolio Risk = 9.385801639141577e-06' in output)
-            self.assertTrue('Portfolio Sharpe Ratio = 9.385801639141577e-06' in output)
+            self.assertTrue('Portfolio Return = 0.017362404155484453' in output)
+            self.assertTrue('Portfolio Risk = 9.38580163914158e-06' in output)
+            self.assertTrue('Portfolio Sharpe Ratio = 9.38580163914158e-06' in output)
 
     def test_custom_objective_function(self):
         """
@@ -544,8 +545,8 @@ class TestMVO(unittest.TestCase):
         assert (weights >= 0).all()
         assert len(weights) == self.data.shape[1]
         assert mvo.asset_names == list(range(mvo.num_assets))
-        assert mvo.portfolio_return == 0.012854555899642236
-        assert  mvo.portfolio_risk == 3.0340907720046832
+        assert mvo.portfolio_return == 0.012854555899642548
+        assert  mvo.portfolio_risk == 3.034090772004682
         np.testing.assert_almost_equal(np.sum(weights), 1)
 
     def test_custom_objective_with_asset_names(self):

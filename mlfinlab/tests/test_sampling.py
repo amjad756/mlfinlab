@@ -17,7 +17,7 @@ def book_ind_mat_implementation(bar_index, label_endtime):
     Book implementation of get_ind_matrix function
     """
     ind_mat = pd.DataFrame(0, index=bar_index, columns=range(label_endtime.shape[0]))
-    for i, (start, end) in enumerate(label_endtime.iteritems()):
+    for i, (start, end) in enumerate(label_endtime.items()):
         ind_mat.loc[start:end, i] = 1.
     return ind_mat
 
@@ -31,9 +31,9 @@ class TestSampling(unittest.TestCase):
         """
         Set samples_info_sets (t1), price bars
         """
-        self.price_bars = pd.Series(index=pd.date_range(start="1/1/2018", end='1/8/2018', freq='H'), dtype='float64')
+        self.price_bars = pd.Series(index=pd.date_range(start="1/1/2018", end='1/8/2018', freq='h'), dtype='float64')
         self.samples_info_sets = pd.DataFrame(index=self.price_bars.index[[1, 2, 5, 7, 10, 11, 12, 20]])
-        self.samples_info_sets['t1'] = self.samples_info_sets.index + pd.Timedelta('2H')
+        self.samples_info_sets['t1'] = self.samples_info_sets.index + pd.Timedelta('2h')
 
     def test_num_concurrent_events(self):
         """
@@ -94,13 +94,12 @@ class TestSampling(unittest.TestCase):
         self.assertTrue(len(bootstrapped_samples_1000) == 100)
 
         # Test sequential bootstrapping on example from a book
-        ind_mat = pd.DataFrame(index=range(0, 6), columns=range(0, 3))
+        ind_mat = pd.DataFrame(index=range(0, 6), columns=range(0, 3), dtype=np.float_)
         ind_mat.loc[:, 0] = [1, 1, 1, 0, 0, 0]
         ind_mat.loc[:, 1] = [0, 0, 1, 1, 0, 0]
         ind_mat.loc[:, 2] = [0, 0, 0, 0, 1, 1]
         ind_mat = ind_mat.values
-
-        seq_bootstrap(ind_mat, sample_length=3, verbose=True, warmup_samples=[1])  # Show printed probabilities
+        seq_bootstrap(ind_mat.astype(np.float_), sample_length=3, verbose=True, warmup_samples=[1])  # Show printed probabilities
 
         # Perform Monte-Carlo test
         standard_unq_array = np.zeros(1000) * np.nan
@@ -158,7 +157,7 @@ class TestSampling(unittest.TestCase):
         """
         Test one loop iteration of Sequential Bootstrapping
         """
-        ind_mat = pd.DataFrame(index=range(0, 6), columns=range(0, 3))
+        ind_mat = pd.DataFrame(index=range(0, 6), columns=range(0, 3), dtype=np.float_)
         ind_mat.loc[:, 0] = [1, 1, 1, 0, 0, 0]
         ind_mat.loc[:, 1] = [0, 0, 1, 1, 0, 0]
         ind_mat.loc[:, 2] = [0, 0, 0, 0, 1, 1]

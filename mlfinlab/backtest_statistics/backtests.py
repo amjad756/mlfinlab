@@ -459,10 +459,10 @@ class CampbellBacktesting:
             all_p_values = np.sort(all_p_values)
 
             # Holm method
-            p_holm[simulation_number - 1] = self._holm_method_sharpe(all_p_values, num_mult_test, p_val)
+            p_holm[simulation_number - 1] = self._holm_method_sharpe(all_p_values, num_mult_test, p_val).item()
 
             # BHY method
-            p_bhy[simulation_number - 1] = self._bhy_method_sharpe(all_p_values, num_mult_test, p_val)
+            p_bhy[simulation_number - 1] = self._bhy_method_sharpe(all_p_values, num_mult_test, p_val).item()
 
         # Calculating the resulting p-values of methods from simulations
         # Array with adjusted p-values

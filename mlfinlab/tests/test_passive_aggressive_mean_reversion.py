@@ -35,7 +35,7 @@ class TestPassiveAggressiveMeanReversion(TestCase):
         # Initialize PAMR.
         pamr = PAMR(optimization_method=0, epsilon=0.5, agg=10)
         # Allocates asset prices to PAMR.
-        pamr.allocate(self.data, resample_by='M')
+        pamr.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(pamr.all_weights)
         # Check if all weights sum to 1.
@@ -52,7 +52,7 @@ class TestPassiveAggressiveMeanReversion(TestCase):
         # Initialize PAMR-1.
         pamr1 = PAMR(optimization_method=1, epsilon=0.5, agg=10)
         # Allocates asset prices to PAMR.
-        pamr1.allocate(self.data, resample_by='M')
+        pamr1.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(pamr1.all_weights)
         # Check if all weights sum to 1.
@@ -69,7 +69,7 @@ class TestPassiveAggressiveMeanReversion(TestCase):
         # Initialize PAMR-2.
         pamr2 = PAMR(optimization_method=2, epsilon=0.5, agg=10)
         # Allocates asset prices to PAMR.
-        pamr2.allocate(self.data, resample_by='M')
+        pamr2.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(pamr2.all_weights)
         # Check if all weights sum to 1.

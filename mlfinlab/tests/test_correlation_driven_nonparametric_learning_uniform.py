@@ -32,7 +32,7 @@ class TestCorrelationDrivenNonparametricLearningUniform(TestCase):
         # Initialize CORN-U.
         corn_u = CORNU(window=2, rho=0.5)
         # Allocates asset prices to CORN-U.
-        corn_u.allocate(self.data, resample_by='M')
+        corn_u.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(corn_u.all_weights)
         # Check if all weights sum to 1.

@@ -70,7 +70,7 @@ class StandardBars(BaseBars):
             # Set variables
             date_time = row[0]
             self.tick_num += 1
-            price = np.float(row[1])
+            price = np.float_(row[1])
             volume = row[2]
             dollar_value = price * volume
             signed_tick = self._apply_tick_rule(price)
@@ -81,7 +81,7 @@ class StandardBars(BaseBars):
             else:
                 # If the threshold is changing, then the threshold defined just before
                 # sampling time is used
-                threshold = self.threshold.iloc[self.threshold.index.get_loc(date_time, method='pad')]
+                threshold = self.threshold.loc[self.threshold.index.asof(date_time)]
 
             if self.open_price is None:
                 self.open_price = price

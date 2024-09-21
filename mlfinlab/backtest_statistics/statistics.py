@@ -127,7 +127,7 @@ def bets_concentration(returns: pd.Series) -> float:
     return hhi
 
 
-def all_bets_concentration(returns: pd.Series, frequency: str = 'M') -> tuple:
+def all_bets_concentration(returns: pd.Series, frequency: str = 'ME') -> tuple:
     """
     Advances in Financial Machine Learning, Snippet 14.3, page 201
 
@@ -203,11 +203,11 @@ def drawdown_and_time_under_water(returns: pd.Series, dollars: bool = False) -> 
     else:
         drawdown = 1 - high_watermarks['min'] / high_watermarks['hwm']
 
-    time_under_water = ((high_watermarks.index[1:] - high_watermarks.index[:-1]) / np.timedelta64(1, 'Y')).values
+    time_under_water = ((high_watermarks.index[1:] - high_watermarks.index[:-1]) / np.timedelta64(365, 'D')).values
 
     # Adding also period from last High watermark to last return observed.
     time_under_water = np.append(time_under_water,
-                                 (returns.index[-1] - high_watermarks.index[-1]) / np.timedelta64(1, 'Y'))
+                                 (returns.index[-1] - high_watermarks.index[-1]) / np.timedelta64(365, 'D'))
 
     time_under_water = pd.Series(time_under_water, index=high_watermarks.index)
 

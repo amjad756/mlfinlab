@@ -47,9 +47,9 @@ class TestLabelingRawReturns(unittest.TestCase):
                                      (np.nan, np.nan, np.nan, np.nan, np.nan)],
                                     columns=self.col5, index=self.idx5)
 
-        pd.testing.assert_frame_equal(test1, test1_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test1, test1_actual, atol=1e-6)
         pd.testing.assert_frame_equal(test2, test1_actual.apply(np.sign))
-        pd.testing.assert_frame_equal(test3, test3_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test3, test3_actual, atol=1e-6)
         pd.testing.assert_frame_equal(test4, test3_actual.apply(np.sign))
 
     def test_series(self):
@@ -65,8 +65,8 @@ class TestLabelingRawReturns(unittest.TestCase):
         test4_actual = pd.Series([0.01, 0.009901, 0, 0, -0.029412, -0.808081, 104.263158, -0.95, 0.05, np.nan])
         test5_actual = pd.Series([np.nan, 0.00995033, 0.0098523, 0, 0, -0.02985296, -1.65068087, 4.65646348,
                                   -2.99573227, 0.04879016])
-        pd.testing.assert_series_equal(test4, test4_actual, check_less_precise=True)
-        pd.testing.assert_series_equal(test5, test5_actual, check_less_precise=True)
+        pd.testing.assert_series_equal(test4, test4_actual, atol=1e-6)
+        pd.testing.assert_series_equal(test5, test5_actual, atol=1e-6)
         pd.testing.assert_series_equal(test6, test5_actual.apply(np.sign))
 
     def test_resample(self):
@@ -76,10 +76,10 @@ class TestLabelingRawReturns(unittest.TestCase):
         price1 = self.data.iloc[0:25, 0:5]
         price2 = self.data.iloc[:, 0:3]
         week_index = price1.resample('W').last().index
-        year_index = self.data.resample('Y').last().index
+        year_index = self.data.resample('YE').last().index
         test6 = raw_return(price1, binary=False, logarithmic=True, resample_by='W', lag=True)
-        test7 = raw_return(price2, binary=False, logarithmic=False, resample_by='Y', lag=True)
-        test8 = raw_return(price2, binary=True, logarithmic=False, resample_by='Y', lag=True)
+        test7 = raw_return(price2, binary=False, logarithmic=False, resample_by='YE', lag=True)
+        test8 = raw_return(price2, binary=True, logarithmic=False, resample_by='YE', lag=True)
         test6_actual = pd.DataFrame([(0.014956, -0.014263, 0.002707, -0.012442, -0.018586),
                                      (-0.081178, -0.056693, 0.011494, -0.022153, -0.046989),
                                      (-0.015181, -0.071367, 0.006431, -0.002403, -0.014326),
@@ -93,6 +93,6 @@ class TestLabelingRawReturns(unittest.TestCase):
                                              -0.079038, np.nan],
                                      'TIP': [0.046957, 0.034841, 0.085287, 0.040449, -0.094803, 0.019199, -0.020802,
                                              0.067287, np.nan]}, index=year_index)
-        pd.testing.assert_frame_equal(test6, test6_actual, check_less_precise=True)
-        pd.testing.assert_frame_equal(test7, test7_actual, check_less_precise=True)
+        pd.testing.assert_frame_equal(test6, test6_actual, atol=1e-6)
+        pd.testing.assert_frame_equal(test7, test7_actual, atol=1e-6)
         pd.testing.assert_frame_equal(test8, test7_actual.apply(np.sign))

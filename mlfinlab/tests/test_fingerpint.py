@@ -6,8 +6,11 @@ import unittest
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 from sklearn.linear_model import LinearRegression
-from sklearn.datasets import load_boston, load_breast_cancer
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+from sklearn.datasets import load_breast_cancer
 from mlfinlab.feature_importance import RegressionModelFingerprint, ClassificationModelFingerprint
+from sklearn.datasets import fetch_openml
 
 
 # pylint: disable=invalid-name
@@ -23,12 +26,13 @@ class TestModelFingerprint(unittest.TestCase):
         Set the file path for the sample dollar bars data.
         """
 
-        self.X, self.y = load_boston(return_X_y=True)
+        boston = fetch_openml(name="boston", version=1, as_frame=False, parser='auto')
+        self.X, self.y = boston.data.astype(float), boston.target.astype(float)
         self.X = pd.DataFrame(self.X[:100])
         self.y = pd.Series(self.y[:100])
 
         self.reg_rf = RandomForestRegressor(n_estimators=10, random_state=42)
-        self.reg_linear = LinearRegression(fit_intercept=True, normalize=False)
+        self.reg_linear = make_pipeline(StandardScaler(), LinearRegression(fit_intercept=True))
         self.reg_rf.fit(self.X, self.y)
         self.reg_linear.fit(self.X, self.y)
 

@@ -232,6 +232,7 @@ class HierarchicalRiskParity:
                 alloc_factor = 1 - left_cluster_variance / (left_cluster_variance + right_cluster_variance)
 
                 # Assign weights to each sub-cluster
+                self.weights = self.weights.astype(float)
                 self.weights[left_cluster] *= alloc_factor
                 self.weights[right_cluster] *= 1 - alloc_factor
 

@@ -33,7 +33,7 @@ class TestOnlineMovingAverageReversion(TestCase):
         # Initialize OLMAR.
         olmar = OLMAR(reversion_method=1, epsilon=1, window=10)
         # Allocates asset prices to OLMAR.
-        olmar.allocate(self.data, resample_by='M')
+        olmar.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(olmar.all_weights)
         # Check if all weights sum to 1.
@@ -50,7 +50,7 @@ class TestOnlineMovingAverageReversion(TestCase):
         # Initialize OLMAR.
         olmar1 = OLMAR(reversion_method=2, epsilon=10, alpha=0.5)
         # Allocates asset prices to OLMAR.
-        olmar1.allocate(self.data, resample_by='M')
+        olmar1.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(olmar1.all_weights)
         # Check if all weights sum to 1.
@@ -118,4 +118,4 @@ class TestOnlineMovingAverageReversion(TestCase):
         olmar7 = OLMAR(reversion_method=1, epsilon=2, window=1)
         no_change_data = self.data
         no_change_data.iloc[:] = 1
-        olmar7.allocate(no_change_data, resample_by='M')
+        olmar7.allocate(no_change_data, resample_by='ME')

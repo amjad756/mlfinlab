@@ -33,7 +33,7 @@ class TestCorrelationDrivenNonparametricLearning(TestCase):
         # Initialize CORN.
         corn = CORN(window=2, rho=0.5)
         # Allocates asset prices to CORN.
-        corn.allocate(self.data, resample_by='M')
+        corn.allocate(self.data, resample_by='ME')
         # Create np.array of all_weights.
         all_weights = np.array(corn.all_weights)
         # Check if all weights sum to 1.

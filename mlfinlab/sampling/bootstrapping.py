@@ -88,7 +88,7 @@ def get_ind_mat_label_uniqueness(ind_mat):
     return uniqueness
 
 
-@jit(parallel=True, nopython=True)
+@jit(parallel=True)
 def _bootstrap_loop_run(ind_mat, prev_concurrency):  # pragma: no cover
     """
     Part of Sequential Bootstrapping for-loop. Using previously accumulated concurrency array, loops through all samples

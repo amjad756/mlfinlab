@@ -33,7 +33,7 @@ class TestFollowTheRegularizedLeader(TestCase):
         # Initialize FTRL.
         ftrl = FTRL(beta=0.2)
         # Allocate asset prices to FTRL.
-        ftrl.allocate(self.data, resample_by='Y')
+        ftrl.allocate(self.data, resample_by='YE')
         all_weights = np.array(ftrl.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -48,7 +48,7 @@ class TestFollowTheRegularizedLeader(TestCase):
         # Initialize FTRL.
         ftrl = FTRL(beta=0)
         # Allocate asset prices to FTRL.
-        ftrl.allocate(self.data, resample_by='Y')
+        ftrl.allocate(self.data, resample_by='YE')
         all_weights = np.array(ftrl.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -63,7 +63,7 @@ class TestFollowTheRegularizedLeader(TestCase):
         # Initialize FTRL.
         ftrl = FTRL(beta=1)
         # Allocate asset prices to FTRL.
-        ftrl.allocate(self.data, resample_by='Y')
+        ftrl.allocate(self.data, resample_by='YE')
         all_weights = np.array(ftrl.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]
@@ -78,7 +78,7 @@ class TestFollowTheRegularizedLeader(TestCase):
         # Initialize FTRL.
         ftrl = FTRL(beta=10)
         # Allocate asset prices to FTRL.
-        ftrl.allocate(self.data, resample_by='Y')
+        ftrl.allocate(self.data, resample_by='YE')
         all_weights = np.array(ftrl.all_weights)
         for i in range(all_weights.shape[0]):
             weights = all_weights[i]

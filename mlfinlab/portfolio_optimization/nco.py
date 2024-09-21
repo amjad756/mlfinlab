@@ -109,6 +109,7 @@ class NCO:
             mu_cluster = (None if mu_vec is None else mu_vec.loc[clusters[i]].values.reshape(-1, 1))
 
             # Estimating the Convex Optimization Solution in a cluster (step 2)
+            w_intra_clusters = w_intra_clusters.astype(np.float_)
             w_intra_clusters.loc[clusters[i], i] = self.allocate_cvo(cov_cluster, mu_cluster).flatten()
 
         # Reducing new covariance matrix to calculate inter-cluster weights
